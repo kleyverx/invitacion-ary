@@ -1,0 +1,76 @@
+---
+---
+<div id="audio-player" class="fixed bottom-8 left-8 z-[90] opacity-0 transition-opacity duration-500 pointer-events-none">
+	<button 
+		id="music-toggle"
+		class="w-12 h-12 glass rounded-full flex items-center justify-center text-silver hover:scale-110 active:scale-90 transition-all duration-300"
+		aria-label="Toggle Music"
+	>
+		<svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+		<svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+    <div id="music-bars" class="absolute inset-0 flex items-center justify-center gap-[2px] opacity-20">
+      <span class="music-bar w-[2px] h-4 bg-white/40"></span>
+      <span class="music-bar w-[2px] h-6 bg-white/40"></span>
+      <span class="music-bar w-[2px] h-3 bg-white/40"></span>
+    </div>
+	</button>
+	<audio id="bg-music" loop>
+		<source src="/birthday-song.mp4" type="audio/mp4">
+	</audio>
+</div>
+
+<script>
+	import { gsap } from 'gsap';
+
+	const audio = document.getElementById('bg-music') as HTMLAudioElement;
+	const toggle = document.getElementById('music-toggle');
+	const container = document.getElementById('audio-player');
+	const playIcon = document.getElementById('play-icon');
+	const pauseIcon = document.getElementById('pause-icon');
+  const bars = document.querySelectorAll('.music-bar');
+
+	let isPlaying = false;
+
+  // Animación de las barras de música
+  const barAnim = gsap.to(bars, {
+    scaleY: 0.3,
+    duration: 0.5,
+    repeat: -1,
+    yoyo: true,
+    stagger: 0.1,
+    ease: "sine.inOut",
+    paused: true
+  });
+
+	window.addEventListener('start-audio', () => {
+		container?.classList.remove('opacity-0', 'pointer-events-none');
+		audio.play();
+		isPlaying = true;
+    barAnim.play();
+	});
+
+	window.addEventListener('welcome-complete', () => {
+		gsap.fromTo(container, { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 1, delay: 0.5 });
+	});
+
+	toggle?.addEventListener('click', () => {
+		if (isPlaying) {
+			audio.pause();
+			playIcon?.classList.remove('hidden');
+			pauseIcon?.classList.add('hidden');
+      barAnim.pause();
+		} else {
+			audio.play();
+			playIcon?.classList.add('hidden');
+			pauseIcon?.classList.remove('hidden');
+      barAnim.play();
+		}
+		isPlaying = !isPlaying;
+	});
+</script>
+
+<style>
+  .music-bar {
+    transform-origin: bottom;
+  }
+</style>

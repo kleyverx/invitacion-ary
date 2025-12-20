@@ -1,0 +1,59 @@
+---
+import AnalogClock from '../components/AnalogClock';
+---
+<section class="py-24 px-6 flex flex-col items-center relative gap-16">
+  
+  <div class="reveal-section text-center space-y-6">
+    <h3 class="text-4xl md:text-5xl text-silver uppercase tracking-[0.2em] font-light">¿Cuándo y Dónde?</h3>
+    <div class="h-[1px] w-24 bg-white/20 mx-auto"></div>
+  </div>
+
+  <!-- Reloj Analógico -->
+  <div class="reveal-section">
+    <AnalogClock client:load targetHour={20} targetMinute={0} />
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">
+    
+    <!-- Lugar -->
+    <div class="reveal-section flex flex-col items-center glass p-10 rounded-3xl space-y-6 text-center group hover:bg-white/[0.08] transition-colors duration-500">
+      <div class="p-4 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      </div>
+      <div>
+        <h4 class="text-2xl font-semibold tracking-wider mb-2">Ubicación</h4>
+        <p class="text-silver/60 leading-relaxed font-light">
+          Salón de fiestas: <br/> 
+          <span class="text-silver text-lg">Campimac - El Obelisco</span>
+        </p>
+      </div>
+      <a href="https://maps.google.com" target="_blank" class="text-xs uppercase tracking-widest text-silver/40 hover:text-white transition-colors border-b border-transparent hover:border-white pb-1">Ver Mapa</a>
+    </div>
+
+    <!-- Hora -->
+    <div class="reveal-section flex flex-col items-center glass p-10 rounded-3xl space-y-6 text-center group hover:bg-white/[0.08] transition-colors duration-500">
+      <div class="p-4 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      </div>
+      <div>
+        <h4 class="text-2xl font-semibold tracking-wider mb-2">Recepción</h4>
+        <p class="text-silver/60 leading-relaxed font-light">
+          Sábado 24 Enero<br/>
+          <span class="text-silver text-lg">08:00 PM</span>
+        </p>
+      </div>
+      <div id="countdown-mini" class="text-[10px] uppercase tracking-widest text-silver/30 font-light">¡Te esperamos puntualmente!</div>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+  section {
+    font-family: 'Montserrat', sans-serif;
+  }
+  h4 {
+    letter-spacing: 0.1em;
+  }
+</style>

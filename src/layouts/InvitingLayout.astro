@@ -1,0 +1,169 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+	</head>
+	<body class="text-[#e2e2e2] antialiased overflow-x-hidden relative">
+		<!-- Fondo de Atardecer Elegante -->
+		<div class="fixed inset-0 -z-10" style="background: linear-gradient(to bottom, #0d0d1a 0%, #1a2847 10%, #294070 20%, #33508C 30%, #3d5080 38%, #4a5478 45%, #5a4a7a 55%, #7a5570 65%, #8b5a6b 75%, #a87080 85%, #d4a5a5 100%);"></div>
+
+		<!-- Estrellas animadas -->
+		<div id="stars" class="fixed inset-0 -z-5 pointer-events-none overflow-hidden">
+			<div class="star star-1"></div>
+			<div class="star star-2"></div>
+			<div class="star star-3"></div>
+			<div class="star star-4"></div>
+			<div class="star star-5"></div>
+			<div class="star star-6"></div>
+			<div class="star star-7"></div>
+			<div class="star star-8"></div>
+			<div class="star star-9"></div>
+			<div class="star star-10"></div>
+			<div class="star star-11"></div>
+			<div class="star star-12"></div>
+			<div class="star star-13"></div>
+			<div class="star star-14"></div>
+			<div class="star star-15"></div>
+		</div>
+
+		<!-- Fuzzy Overlay (Textura de grano global) -->
+		<div class="fixed inset-0 pointer-events-none opacity-[0.02] z-[999] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+		
+		<slot />
+
+		<script>
+			import Lenis from 'lenis';
+			import { gsap } from 'gsap';
+			import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+			// Registrar plugins
+			gsap.registerPlugin(ScrollTrigger);
+
+			// Configuración de GSAP Global
+			gsap.config({
+				force3D: true, // Optimización para móviles
+			});
+
+			// Inicializar Lenis
+			const lenis = new Lenis({
+				duration: 1.2,
+				easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+				autoRaf: true,
+			});
+
+			// Sincronizar Lenis con ScrollTrigger
+			lenis.on('scroll', ScrollTrigger.update);
+
+			gsap.ticker.add((time) => {
+				lenis.raf(time * 1000);
+			});
+
+			gsap.ticker.lagSmoothing(0);
+
+			// Hacer lenis accesible globalmente (opcional)
+			window.lenis = lenis;
+		</script>
+
+		<style is:global>
+			:root {
+				--accent: #e2e2e2;
+				--background: #0a0a0a;
+			}
+			
+			html {
+				scroll-behavior: initial;
+			}
+
+			body {
+				font-family: 'Montserrat', sans-serif;
+			}
+
+			h1, h2, .cursive {
+				font-family: 'Great Vibes', cursive;
+			}
+
+			/* Lenis Recommended CSS */
+			html.lenis, html.lenis body {
+				height: auto;
+			}
+
+			.lenis.lenis-smooth {
+				scroll-behavior: auto !important;
+			}
+
+			.lenis.lenis-smooth [data-lenis-prevent] {
+				overscroll-behavior: contain;
+			}
+
+			.lenis.lenis-stopped {
+				overflow: hidden;
+			}
+
+			.shiny-text {
+				background: linear-gradient(
+					120deg, 
+					rgba(255,255,255,0) 30%, 
+					rgba(255,255,255,0.8) 50%, 
+					rgba(255,255,255,0) 70%
+				);
+				background-size: 200% 100%;
+				background-clip: text;
+				-webkit-background-clip: text;
+				color: transparent;
+				animation: shine 5s infinite linear;
+			}
+
+			@keyframes shine {
+				0% { background-position: 200% 0; }
+				100% { background-position: -200% 0; }
+			}
+
+			/* Estrellas animadas */
+			.star {
+				position: absolute;
+				width: 3px;
+				height: 3px;
+				background: white;
+				border-radius: 50%;
+				animation: twinkle 3s infinite ease-in-out;
+				box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.3);
+			}
+
+			@keyframes twinkle {
+				0%, 100% { opacity: 0.3; transform: scale(0.8); }
+				50% { opacity: 1; transform: scale(1.2); }
+			}
+
+			.star-1 { top: 5%; left: 10%; animation-delay: 0s; }
+			.star-2 { top: 12%; left: 25%; animation-delay: 0.5s; width: 2px; height: 2px; }
+			.star-3 { top: 8%; left: 45%; animation-delay: 1s; }
+			.star-4 { top: 15%; left: 60%; animation-delay: 1.5s; width: 4px; height: 4px; }
+			.star-5 { top: 3%; left: 75%; animation-delay: 2s; }
+			.star-6 { top: 20%; left: 85%; animation-delay: 0.3s; width: 2px; height: 2px; }
+			.star-7 { top: 25%; left: 15%; animation-delay: 0.8s; }
+			.star-8 { top: 18%; left: 35%; animation-delay: 1.3s; width: 2px; height: 2px; }
+			.star-9 { top: 10%; left: 90%; animation-delay: 1.8s; }
+			.star-10 { top: 28%; left: 50%; animation-delay: 2.3s; width: 2px; height: 2px; }
+			.star-11 { top: 6%; left: 5%; animation-delay: 0.2s; width: 2px; height: 2px; }
+			.star-12 { top: 22%; left: 70%; animation-delay: 0.7s; }
+			.star-13 { top: 30%; left: 30%; animation-delay: 1.2s; width: 2px; height: 2px; }
+			.star-14 { top: 4%; left: 55%; animation-delay: 1.7s; width: 4px; height: 4px; }
+			.star-15 { top: 35%; left: 95%; animation-delay: 2.2s; }
+		</style>
+	</body>
+</html>

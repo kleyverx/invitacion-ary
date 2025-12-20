@@ -1,0 +1,68 @@
+---
+---
+<section class="py-24 px-6 relative overflow-hidden flex flex-col items-center">
+	<div class="max-w-4xl w-full space-y-24 text-center">
+		
+		<!-- Padres -->
+		<div class="reveal-section space-y-8">
+			<h3 class="text-sm md:text-md text-silver/40 uppercase tracking-[0.4em] font-semibold">Mis Padres</h3>
+			<div class="space-y-4">
+				<p class="text-6xl md:text-8xl cursive text-silver">Nelson Rondón</p>
+				<p class="text-3xl md:text-4xl font-light text-silver/40">&</p>
+				<p class="text-6xl md:text-8xl cursive text-silver">Jenny Quintero</p>
+			</div>
+		</div>
+
+		<!-- Madrinas -->
+		<div class="reveal-section space-y-8">
+			<h3 class="text-sm md:text-md text-silver/40 uppercase tracking-[0.4em] font-semibold">Mis Madrinas</h3>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+				<p class="text-4xl md:text-6xl cursive text-silver/90">Yaireli Quintero</p>
+				<p class="text-4xl md:text-6xl cursive text-silver/90">Yesenia Quintero</p>
+			</div>
+		</div>
+
+    <div class="reveal-section max-w-2xl mx-auto pt-12">
+      <p class="text-lg md:text-xl font-light leading-relaxed text-silver/70 italic">
+        "Hay momentos y personas que marcan nuestras vidas para siempre. Este es uno de esos momentos, y no podría imaginarlo sin la presencia de quienes más quiero."
+      </p>
+    </div>
+
+	</div>
+</section>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+  // Animación de revelación para todas las secciones
+	const reveals = document.querySelectorAll('.reveal-section');
+	
+	reveals.forEach((el) => {
+		gsap.fromTo(el, 
+			{ y: 50, opacity: 0 },
+			{
+				y: 0,
+				opacity: 1,
+				duration: 1.5,
+				ease: "power3.out",
+				scrollTrigger: {
+					trigger: el,
+					start: "top 85%",
+					toggleActions: "play none none reverse"
+				}
+			}
+		);
+	});
+</script>
+
+<style>
+	span, p, h3 {
+		font-family: 'Montserrat', sans-serif;
+	}
+  .cursive {
+    font-family: 'Great Vibes', cursive;
+  }
+</style>

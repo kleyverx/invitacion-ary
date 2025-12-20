@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Great Vibes", ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+
+  --color-background: #0a0a0a;
+  --color-silver: #e2e2e2;
+  --color-accent: #3b82f6; /* Azul sutil */
+}
+
+@layer base {
+  body {
+    @apply bg-background text-silver;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}

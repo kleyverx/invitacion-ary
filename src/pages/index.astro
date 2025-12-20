@@ -1,16 +1,39 @@
 ---
-
+import InvitingLayout from '../layouts/InvitingLayout.astro';
+import WelcomeScreen from '../components/WelcomeScreen.astro';
+import AudioPlayer from '../components/AudioPlayer.astro';
+import Hero from '../sections/Hero.astro';
+import Details from '../sections/Details.astro';
+import EventInfo from '../sections/EventInfo.astro';
+import DressCode from '../sections/DressCode.astro';
+import RSVP from '../sections/RSVP.astro';
+import '../styles/global.css';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<InvitingLayout title="Mis 15 Años - Invitación">
+	<WelcomeScreen />
+	<AudioPlayer />
+	
+	<main id="main-content" class="opacity-0">
+		<Hero />
+		<Details />
+		<EventInfo />
+		<DressCode />
+		<RSVP />
+	</main>
+</InvitingLayout>
+
+<script>
+	import { gsap } from 'gsap';
+
+	window.addEventListener('welcome-complete', () => {
+		const mainContent = document.getElementById('main-content');
+		if (mainContent) {
+			gsap.to(mainContent, {
+				opacity: 1,
+				duration: 2,
+				ease: "power2.out"
+			});
+		}
+	});
+</script>

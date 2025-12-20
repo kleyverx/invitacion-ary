@@ -1,0 +1,84 @@
+---
+---
+<div id="welcome-screen" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0a0a] transition-opacity duration-1000">
+	<div class="text-center space-y-8 px-6">
+		<div class="relative inline-block">
+			<h1 id="welcome-title" class="text-6xl md:text-8xl text-silver opacity-0 transform translate-y-10">
+				Mis 15 Años
+			</h1>
+			<div id="title-glow" class="absolute inset-0 blur-2xl bg-white/5 scale-150 -z-10 opacity-0"></div>
+		</div>
+		
+		<p id="welcome-subtitle" class="text-lg md:text-xl font-light tracking-[0.3em] uppercase text-silver/60 opacity-0 transform translate-y-5">
+			Estás Invitado
+		</p>
+
+		<button 
+			id="enter-btn" 
+			class="mt-12 px-10 py-4 glass text-silver rounded-full tracking-[0.2em] uppercase text-sm hover:scale-110 active:scale-95 transition-all duration-300 opacity-0 transform translate-y-5"
+		>
+			Abrir Invitación
+		</button>
+	</div>
+
+	<!-- Textura de grano sutil (Fuzzy Overlay) -->
+	<div class="absolute inset-0 pointer-events-none opacity-20 contrast-150 brightness-50 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+</div>
+
+<script>
+	import { gsap } from 'gsap';
+
+	const welcomeScreen = document.getElementById('welcome-screen');
+	const enterBtn = document.getElementById('enter-btn');
+	const title = document.getElementById('welcome-title');
+	const subtitle = document.getElementById('welcome-subtitle');
+	const glow = document.getElementById('title-glow');
+
+	// Animación de entrada
+	const tl = gsap.timeline();
+	
+	tl.to(title, { opacity: 1, y: 0, duration: 2, ease: "power4.out" })
+	  .to(subtitle, { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1.2")
+	  .to(enterBtn, { opacity: 1, y: 0, duration: 1, ease: "power2.out" }, "-=1")
+	  .to(glow, { opacity: 0.2, duration: 3, repeat: -1, yoyo: true }, "-=2");
+
+	enterBtn?.addEventListener('click', () => {
+		// Emitir evento para iniciar música
+		window.dispatchEvent(new CustomEvent('start-audio'));
+		
+		// Animación de salida
+		gsap.to(welcomeScreen, {
+			opacity: 0,
+			duration: 1.5,
+			ease: "power2.inOut",
+			onComplete: () => {
+				welcomeScreen?.remove();
+				// Desbloquear scroll
+				if (window.lenis) window.lenis.start();
+				// Iniciar animaciones de la página
+				window.dispatchEvent(new CustomEvent('welcome-complete'));
+			}
+		});
+
+		// Animación de los elementos al salir
+		gsap.to([title, subtitle, enterBtn], {
+			y: -50,
+			opacity: 0,
+			duration: 1,
+			stagger: 0.1,
+			ease: "power2.in"
+		});
+	});
+
+	// Bloquear scroll inicialmente
+	window.addEventListener('load', () => {
+		if (window.lenis) window.lenis.stop();
+	});
+</script>
+
+<style>
+	h1 {
+		font-family: 'Great Vibes', cursive;
+		text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+	}
+</style>
