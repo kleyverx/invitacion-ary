@@ -173,7 +173,7 @@ export default function AnalogClock({ targetHour = 20, targetMinute = 0 }: Clock
 
       {/* Etiqueta */}
       <p className="text-sm tracking-[0.3em] uppercase text-silver/40 font-light">
-        {targetHour.toString().padStart(2, '0')}:{targetMinute.toString().padStart(2, '0')} PM • Hora del Evento
+        {(targetHour % 12 || 12).toString().padStart(2, '0')}:{targetMinute.toString().padStart(2, '0')} PM • Hora del Evento
       </p>
     </div>
   );
